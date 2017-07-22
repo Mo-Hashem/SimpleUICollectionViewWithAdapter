@@ -1,14 +1,11 @@
 //
 //  CollectionViewAdapter.swift
-//  Teby
 //
 //  Created by Mohamed Hashem on 7/16/17.
 //  Copyright © 2017 MAC. All rights reserved.
 //
 
 import UIKit
-
-
 
 class CollectionViewAdapter: UICollectionView , UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
@@ -118,35 +115,77 @@ class CollectionViewAdapter: UICollectionView , UICollectionViewDelegate,UIColle
         }
     }
     
-    // MARK: UICollectionViewDelegate
+  
     
-    /*
-     // Uncomment this method to specify if the specified item should be highlighted during tracking
-     override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-     return true
-     }
-     */
-    
-    /*
-     // Uncomment this method to specify if the specified item should be selected
-     override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-     return true
-     }
-     */
-    
-    /*
-     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-     override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-     return false
-     }
-     
-     override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-     return false
-     }
-     
-     override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-     
-     }
-     */
     
 }
+
+
+
+// usage
+
+class sampleCollectionCell: UICollectionViewCell {
+    
+    @IBOutlet weak var txtLabel:UILabel!
+    
+    override func awakeFromNib()
+    {
+        super.awakeFromNib()
+    }
+    
+    func setup(data:String)
+    {
+        txtLabel.text = data
+        
+    }
+    
+    
+}
+
+class client: UIViewController
+{
+    @IBOutlet weak var collectionViewSample: CollectionViewAdapter!
+    @IBOutlet weak var ConstCollectionHeight : NSLayoutConstraint!// constraint of the collection view Height / if you ont want animation ignore this line
+    
+    var dataArray : [String]? = ["hi","wow"] // if there is no initial data, you can ignore this line
+    
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        
+        // empty data label that show when there is no data
+        collectionViewSample.SetEmptyDataLabel(label: "No data")
+        
+        // suting up the collectionViewAdapter
+        let cellsize = CGSize(width:(collectionViewSample.width-10) / 2,height: 50)
+        collectionViewSample.setup(cell: "sampleCollectionCell", data: dataArray ?? [], cellsize: cellsize, AL_Height: ConstCollectionHeight /* optional */ )
+        { (cell, index) in
+            (cell as! sampleCollectionCell).setup(data: self.collectionViewAuditedCategories.dataArray[index.row] as! String)
+        }
+        
+    }
+    
+    @IBAction func addItemClicked(_ sender: Any)
+    {
+        
+        self.collectionViewSample.AddItem(item: "hello", Animated: true)
+        
+    }
+    
+    @IBAction func removeItemClicked(_ sender: Any)
+    {
+        self.collectionViewSample.removeItem(at: IndexPath(row: 1, section: 0), Animated: true)
+        
+    }
+    
+    
+}
+
+
+
+
+
+
+
+
