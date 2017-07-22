@@ -161,7 +161,7 @@ class client: UIViewController
         let cellsize = CGSize(width:(collectionViewSample.width-10) / 2,height: 50)
         collectionViewSample.setup(cell: "sampleCollectionCell", data: dataArray ?? [], cellsize: cellsize, AL_Height: ConstCollectionHeight /* optional */ )
         { (cell, index) in
-            (cell as! sampleCollectionCell).setup(data: self.collectionViewAuditedCategories.dataArray[index.row] as! String)
+            (cell as! sampleCollectionCell).setup(data: self.collectionViewSample.dataArray[index.row] as! String)
         }
         
     }
