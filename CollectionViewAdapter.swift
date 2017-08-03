@@ -16,6 +16,8 @@ class CollectionViewAdapter: UICollectionView , UICollectionViewDelegate,UIColle
     
     var AutolayoutHeightConstraint:NSLayoutConstraint?
     
+    var didSelectItemAt: ((_ index:IndexPath)->())?
+    
     var CellConfigurator : ((UICollectionViewCell,_ index:IndexPath)->())?
 
     var emptyDataLabel:UILabel=UILabel()
@@ -113,6 +115,9 @@ class CollectionViewAdapter: UICollectionView , UICollectionViewDelegate,UIColle
             }
             
         }
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        didSelectItemAt?(indexPath)
     }
     
   
